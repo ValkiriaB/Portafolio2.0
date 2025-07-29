@@ -7,7 +7,6 @@ import {
   useDisclosure,
   Stack,
   useColorModeValue,
-  Collapse,
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import { Link as RouterLink } from 'react-router-dom'
@@ -22,58 +21,63 @@ const Links = [
   { label: 'Blog', to: '/blog' },
 ]
 
-const NavLink = ({ to, children }) => (
-  <Link
-    as={RouterLink}
-    to={to}
-    px={3}
-    py={2}
-    rounded="md"
-    _hover={{ textDecoration: 'none', bg: 'purple.300', color: 'white' }}
-    w="100%"
-  >
-    {children}
-  </Link>
-)
+const NavLink = ({ to, children }) => {
+  // color del texto normal y hover que cambia según el modo
+  const color = useColorModeValue('gray.800', 'gray.200')
+  const hoverBg = useColorModeValue('purple.300', 'purple.600')
+  const hoverColor = useColorModeValue('white', 'white')
+
+  return (
+    <Link
+      as={RouterLink}
+      to={to}
+      px={3}
+      py={2}
+      rounded="md"
+      color={color}
+      _hover={{ textDecoration: 'none', bg: hoverBg, color: hoverColor }}
+    >
+      {children}
+    </Link>
+  )
+}
 
 export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const bg = useColorModeValue('white', 'gray.800')
   const color = useColorModeValue('gray.800', 'white')
+  const boxShadow = useColorModeValue('md', 'dark-lg')
 
   return (
     <Box
-      bg={bg}
-      color={color}
-      px={4}
+      className="navbar-custom"
       position="fixed"
       width="100%"
-      zIndex={10}
-      boxShadow="md"
+      zIndex={8}
+      bg={bg}
+      color={color}
+      boxShadow={boxShadow}
     >
       <Flex
         h={16}
         alignItems="center"
         justifyContent="space-between"
+        px={6}
         maxW="1200px"
         mx="auto"
       >
         <IconButton
           size="md"
           icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-          aria-label="Abrir menú"
+          aria-label="Toggle Menu"
           display={{ md: 'none' }}
           onClick={isOpen ? onClose : onOpen}
         />
-        <HStack spacing={6} alignItems="center">
+        <HStack spacing={8} alignItems="center">
           <Box fontWeight="bold" fontSize="xl">
             Mi Portafolio
           </Box>
-          <HStack
-            as="nav"
-            spacing={4}
-            display={{ base: 'none', md: 'flex' }}
-          >
+          <HStack as="nav" spacing={4} display={{ base: 'none', md: 'flex' }}>
             {Links.map(({ label, to }) => (
               <NavLink key={label} to={to}>
                 {label}
@@ -81,14 +85,15 @@ export default function Navbar() {
             ))}
           </HStack>
         </HStack>
+
         <HStack spacing={4} display={{ base: 'none', md: 'flex' }}>
           <ColorModeSwitcher />
         </HStack>
       </Flex>
 
-      <Collapse in={isOpen} animateOpacity>
+      {isOpen && (
         <Box pb={4} display={{ md: 'none' }}>
-          <Stack as="nav" spacing={4}>
+          <Stack as="nav" spacing={4} px={6}>
             {Links.map(({ label, to }) => (
               <NavLink key={label} to={to}>
                 {label}
@@ -97,7 +102,7 @@ export default function Navbar() {
             <ColorModeSwitcher />
           </Stack>
         </Box>
-      </Collapse>
+      )}
     </Box>
   )
 }
