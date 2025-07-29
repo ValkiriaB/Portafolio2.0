@@ -59,7 +59,7 @@ export default function Home() {
 
         <Button
           as={Link}
-          href="../public/ValeriaBarkicv.pdf"
+          href="./ValeriaBarkicv.pdf"
           colorScheme="orange"
           size={{ base: 'md', md: 'lg' }}
           alignSelf="center"
