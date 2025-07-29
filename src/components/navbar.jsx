@@ -22,7 +22,6 @@ const Links = [
 ]
 
 const NavLink = ({ to, children }) => {
-  // color del texto normal y hover que cambia según el modo
   const color = useColorModeValue('gray.800', 'gray.200')
   const hoverBg = useColorModeValue('purple.300', 'purple.600')
   const hoverColor = useColorModeValue('white', 'white')
@@ -73,6 +72,7 @@ export default function Navbar() {
           display={{ md: 'none' }}
           onClick={isOpen ? onClose : onOpen}
         />
+
         <HStack spacing={8} alignItems="center">
           <Box fontWeight="bold" fontSize="xl">
             Mi Portafolio
@@ -86,7 +86,8 @@ export default function Navbar() {
           </HStack>
         </HStack>
 
-        <HStack spacing={4} display={{ base: 'none', md: 'flex' }}>
+        {/* Este HStack siempre visible (sin display responsive) */}
+        <HStack spacing={4}>
           <ColorModeSwitcher />
         </HStack>
       </Flex>
@@ -99,11 +100,9 @@ export default function Navbar() {
                 {label}
               </NavLink>
             ))}
-            <ColorModeSwitcher />
           </Stack>
         </Box>
       )}
     </Box>
   )
 }
-
