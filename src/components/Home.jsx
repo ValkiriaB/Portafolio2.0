@@ -59,11 +59,12 @@ export default function Home() {
 
         <Button
           as={Link}
-          href="https://drive.google.com/file/d/1_cFFq7VthjsJ9_U6up8O4R-lQL0vKZyu/view?usp=sharing"
+          href="../public/ValeriaBarkicv.pdf"
           colorScheme="orange"
           size={{ base: 'md', md: 'lg' }}
           alignSelf="center"
           target="_blank"
+          rel="noopener noreferrer"
         >
           Descargar mi CV
         </Button>
