@@ -8,7 +8,6 @@ import Portfolio from "./components/Portafolio";
 import Estudios from "./components/Estudios";
 import Skills from "./components/About";
 import Contacto from "./components/Contact";
-import Blog from "./components/blog";
 import FogBackground from "./components/FogBackground";
 
 function App() {
@@ -16,7 +15,6 @@ function App() {
     <Router>
       {/* NIEBLA */}
       <FogBackground />
-
       <Flex
         direction="column"
         minH="100vh"
@@ -35,7 +33,6 @@ function App() {
             <Route path="/estudios" element={<Estudios />} />
             <Route path="/skills" element={<Skills />} />
             <Route path="/contacto" element={<Contacto />} />
-            <Route path="/blog" element={<Blog />} />
           </Routes>
         </Box>
 

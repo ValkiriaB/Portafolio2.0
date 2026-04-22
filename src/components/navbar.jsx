@@ -20,7 +20,7 @@ const Links = [
   { label: 'Estudios', to: '/estudios' },
   { label: 'Mis Skills', to: '/skills' },
   { label: 'Contacto', to: '/contacto' },
-  { label: 'Blog', to: '/blog' },
+ 
 ]
 
 const NavLink = ({ to, children }) => {
