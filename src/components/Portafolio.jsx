@@ -76,19 +76,20 @@ export default function Portfolio() {
   const cardShadow = useColorModeValue('md', 'dark-lg')
   const textColor = useColorModeValue('gray.800', 'gray.200')
   const descriptionColor = useColorModeValue('gray.600', 'gray.400')
+  const change = useColorModeValue ('purple.700', 'purple.200')
 
   return (
     <MotionBox
       id="portafolio"
       maxW="7xl"
       mx="auto"
-      py={12}
+      py={16}
       px={{ base: 4, md: 6, lg: 8 }}
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
     >
-      <Heading mb={{ base: 6, md: 10 }} textAlign="center" color="purple.500">
+      <Heading mb={{ base: 6, md: 10 }} textAlign="center" color={change}>
         Mi Portafolio
       </Heading>
 

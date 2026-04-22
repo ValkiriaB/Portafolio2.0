@@ -8,6 +8,7 @@ import {
   useColorModeValue
 } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
+import { use } from 'react'
 import {
   FaCode,
   FaPaintBrush,
@@ -55,15 +56,16 @@ const skills = [
 export default function Skills() {
   const bg = useColorModeValue('gray.100', 'gray.700')
   const textColor = useColorModeValue('gray.800', 'gray.200')
-
+  const color =  useColorModeValue('purple.700', 'purple.200')
+  const icon = useColorModeValue ('purple.500', 'purple.200')
   return (
-    <Box px={{ base: 4, md: 6 }} py={{ base: 6, md: 10 }} maxW="1200px" mx="auto">
+    <Box px={{ base: 4, md: 6 }} py={{ base: 6, md: 16 }} maxW="1200px" mx="auto">
       <Heading
         as="h2"
         size="xl"
-        mb={{ base: 8, md: 10 }}
+        mb={{ base: 8, md: 8 }}
         textAlign="center"
-        color="purple.500"
+        color= {color}
       >
         Mis Skills
       </Heading>
@@ -83,7 +85,7 @@ export default function Skills() {
             whileHover={{ scale: 1.05 }}
           >
             <VStack spacing={3} align="start">
-              <Icon as={skill.icon} boxSize={{ base: 6, md: 8 }} color="orange.400" />
+              <Icon as={skill.icon} boxSize={{ base: 6, md: 8 }} color={icon} />
               <Heading as="h3" size="md" color={textColor}>
                 {skill.title}
               </Heading>

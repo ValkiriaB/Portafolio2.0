@@ -13,10 +13,10 @@ import { motion } from 'framer-motion'
 const MotionBox = motion(Box)
 
 export default function Contacto() {
-  const iconColor = useColorModeValue('purple.500', 'orange.300')
-  const headingColor = useColorModeValue('purple.500', 'orange.300')
-  const textColor = useColorModeValue('gray.600', 'gray.300')
-  const hoverColor = useColorModeValue('orange.400', 'yellow.300')
+  const iconColor = useColorModeValue('purple.700', 'purple.200')
+  const headingColor = useColorModeValue('purple.700', 'purple.200')
+  const textColor = useColorModeValue('gray.700', 'gray.300')
+  const hoverColor = useColorModeValue('orange.400', 'orange.400')
 
   const contacts = [
     {
@@ -43,7 +43,7 @@ export default function Contacto() {
 
   return (
     <MotionBox
-      py={12}
+      py={20}
       px={6}
       maxW="700px"
       mx="auto"

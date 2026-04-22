@@ -41,13 +41,14 @@ const posts = [
 
 export default function Blog() {
   const textColor = useColorModeValue('gray.600', 'gray.300')
-  const titleColor = useColorModeValue('purple.500', 'orange.300')
+  const titleColor = useColorModeValue('purple.700', 'purple.200')
+  const link = useColorModeValue ('purple.700', 'purple.200')
 
   return (
     <MotionBox
       maxW="7xl"
       mx="auto"
-      px={{ base: 4, md: 6 }}
+      px={{ base: 4, md: 12 }}
       py={{ base: 8, md: 12 }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -86,7 +87,7 @@ export default function Blog() {
               </Text>
               <Link
                 href={post.link}
-                color="teal.500"
+                color= {link}
                 fontWeight="bold"
                 _hover={{ textDecoration: 'underline' }}
                 fontSize={{ base: 'sm', md: 'md' }}

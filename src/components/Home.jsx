@@ -16,13 +16,14 @@ export default function Home() {
   const shadow = useColorModeValue('md', 'dark-lg')
   const textColor = useColorModeValue('gray.700', 'gray.300')
   const secondaryTextColor = useColorModeValue('gray.600', 'gray.400')
+  const change = useColorModeValue('purple.600', 'purple.200')
 
   return (
     <MotionBox
       maxW={{ base: '90%', md: '800px' }}
       mx="auto"
       my={{ base: 6, md: 12 }}
-      px={{ base: 4, md: 6 }}
+      px={{ base: 4, md: 8 }}
       py={{ base: 6, md: 8 }}
       bg={bg}
       rounded="md"
@@ -32,11 +33,11 @@ export default function Home() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
     >
-      <Stack spacing={{ base: 4, md: 6 }}>
+      <Stack spacing={{ base: 4, md: 8 }}>
         <Heading
           as="h1"
           fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }}
-          color="purple.500"
+          color= {change}
         >
           Hola, soy Valeria Barki
         </Heading>
@@ -60,7 +61,7 @@ export default function Home() {
         <Button
           as={Link}
           href="./ValeriaBarkicv.pdf"
-          colorScheme="orange"
+          colorScheme="purple"
           size={{ base: 'md', md: 'lg' }}
           alignSelf="center"
           target="_blank"
