@@ -8,7 +8,6 @@ import {
   useColorModeValue
 } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
-import { use } from 'react'
 import {
   FaCode,
   FaPaintBrush,
@@ -56,40 +55,52 @@ const skills = [
 export default function Skills() {
   const bg = useColorModeValue('gray.100', 'gray.700')
   const textColor = useColorModeValue('gray.800', 'gray.200')
-  const color =  useColorModeValue('purple.700', 'purple.200')
-  const icon = useColorModeValue ('purple.500', 'purple.200')
+  const color = useColorModeValue('purple.700', 'purple.200')
+  const iconColor = useColorModeValue('purple.500', 'purple.200')
+
   return (
-    <Box px={{ base: 4, md: 6 }} py={{ base: 6, md: 16 }} maxW="1200px" mx="auto">
+    <Box 
+      id="skills" 
+      // Este scrollMt hace que al clickear en la Navbar, el título no quede tapado
+      scrollMt={{ base: "80px", md: "100px" }} 
+      px={{ base: 4, md: 6 }} 
+      py={{ base: 12, md: 20 }} 
+      maxW="1200px" 
+      mx="auto"
+    >
       <Heading
         as="h2"
         size="xl"
-        mb={{ base: 8, md: 8 }}
+        mb={{ base: 10, md: 12 }}
         textAlign="center"
-        color= {color}
+        color={color}
       >
         Mis Skills
       </Heading>
 
-      <SimpleGrid columns={{ base: 1, sm: 1, md: 2, lg: 3 }} spacing={6}>
+      <SimpleGrid columns={{ base: 1, sm: 1, md: 2, lg: 3 }} spacing={8}>
         {skills.map((skill, index) => (
           <MotionBox
             key={index}
             bg={bg}
-            p={{ base: 4, md: 6 }}
-            rounded="md"
-            boxShadow="md"
+            p={{ base: 6, md: 8 }}
+            rounded="lg"
+            boxShadow="xl"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            whileHover={{ 
+              scale: 1.05,
+              transition: { duration: 0.2 }
+            }}
           >
-            <VStack spacing={3} align="start">
-              <Icon as={skill.icon} boxSize={{ base: 6, md: 8 }} color={icon} />
+            <VStack spacing={4} align="start">
+              <Icon as={skill.icon} boxSize={{ base: 8, md: 10 }} color={iconColor} />
               <Heading as="h3" size="md" color={textColor}>
                 {skill.title}
               </Heading>
-              <Text fontSize={{ base: 'sm', md: 'md' }} color={textColor}>
+              <Text fontSize={{ base: 'sm', md: 'md' }} color={textColor} lineHeight="tall">
                 {skill.description}
               </Text>
             </VStack>

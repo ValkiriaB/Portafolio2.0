@@ -60,7 +60,7 @@ export default function Home() {
 
         <Button
           as={Link}
-          href="./ValeriaBarkicv.pdf"
+          href="./CurriculumValeriaBarki.pdf"
           colorScheme="purple"
           size={{ base: 'md', md: 'lg' }}
           alignSelf="center"

@@ -1,45 +1,42 @@
-import {
-  IconButton,
-  useColorMode,
-  useColorModeValue,
-  Tooltip,
-  Box
-} from '@chakra-ui/react'
-import { FaSun, FaMoon } from 'react-icons/fa'
-import { motion } from 'framer-motion'
+import React from 'react';
+import { useColorMode, useColorModeValue, IconButton } from '@chakra-ui/react';
+import { FaMoon, FaSun } from 'react-icons/fa';
 
-const MotionIconButton = motion(IconButton)
-
-const ColorModeSwitcher = () => {
-  const { toggleColorMode } = useColorMode()
-  const isDark = useColorModeValue(false, true)
+const ColorModeSwitcher = (props) => {
+  const { toggleColorMode } = useColorMode();
+  const text = useColorModeValue('dark', 'light');
+  
+  // Colores definidos para que NO saturen
+  const sunColor = "orange.400";
+  const moonColor = "purple.300";
+  const iconColor = useColorModeValue(sunColor, moonColor);
 
   return (
-    <Box
-      position={{ base: 'fixed', md: 'absolute' }}
-      bottom={{ base: 4, md: 'auto' }}
-      right={{ base: 4, md: 'auto' }}
-      zIndex="tooltip"
-    >
-      <Tooltip label="Cambiar tema" aria-label="Cambiar tema">
-        <MotionIconButton
-          whileHover={{ scale: 1.2 }}
-          whileTap={{ scale: 0.9 }}
-          icon={isDark ? <FaSun /> : <FaMoon />}
-          isRound
-          size="md"
-          onClick={toggleColorMode}
-          aria-label="Toggle color mode"
-          colorScheme={isDark ? 'yellow' : 'purple'}
-          bg={isDark ? 'gray.700' : 'gray.200'}
-          color={isDark ? 'yellow.300' : 'purple.700'}
-          transition="all 0.3s ease"
-          boxShadow="md"
-        />
-      </Tooltip>
-    </Box>
-  )
-}
+    <IconButton
+      size="md"
+      fontSize="lg"
+      aria-label={`Switch to ${text} mode`}
+      variant="ghost"
+      color={iconColor}
+      onClick={toggleColorMode}
+      icon={useColorModeValue(<FaSun />, <FaMoon />)}
+      
+      // AQUÍ ESTÁ EL TRUCO:
+      _hover={{
+        bg: useColorModeValue("blackAlpha.100", "whiteAlpha.100"),
+        // Forzamos a que el icono NO cambie de color ni brille de más
+        color: iconColor, 
+        transform: "scale(1.1)", // Un pequeño movimiento en lugar de brillo
+        boxShadow: "none", // Quitamos cualquier resplandor raro
+      }}
+      _active={{
+        bg: "transparent",
+      }
+    }
+      transition="all 0.2s"
+      {...props}
+    />
+  );
+};
 
-export default ColorModeSwitcher
-
+export default ColorModeSwitcher;

@@ -8,6 +8,7 @@ import Portfolio from "./components/Portafolio";
 import Estudios from "./components/Estudios";
 import Skills from "./components/About";
 import Contacto from "./components/Contact";
+import Diseños from "./components/Diseños";
 import FogBackground from "./components/FogBackground";
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/portafolio" element={<Portfolio />} />
+             <Route path="/Diseños" element={<Diseños />} />
             <Route path="/estudios" element={<Estudios />} />
             <Route path="/skills" element={<Skills />} />
             <Route path="/contacto" element={<Contacto />} />

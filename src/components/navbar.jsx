@@ -17,15 +17,15 @@ import ColorModeSwitcher from './ColorModeSwitcher'
 const Links = [
   { label: 'Home', to: '/' },
   { label: 'Portafolio', to: '/portafolio' },
+  { label: 'Diseños', to: '/diseños' },
   { label: 'Estudios', to: '/estudios' },
   { label: 'Mis Skills', to: '/skills' },
   { label: 'Contacto', to: '/contacto' },
- 
 ]
 
 const NavLink = ({ to, children }) => {
-  const color = useColorModeValue('purple.800', 'purple.300') // Letras naranjas en dark
-  const hoverBg = useColorModeValue('rgba(190, 113, 248, 0.6)', 'rgba(250, 181, 52, 0.27)')
+  const color = useColorModeValue('purple.800', 'purple.300')
+  const hoverBg = useColorModeValue('rgba(190, 113, 248, 0.2)', 'rgba(250, 181, 52, 0.15)')
 
   return (
     <Link
@@ -33,10 +33,11 @@ const NavLink = ({ to, children }) => {
       to={to}
       px={4}
       py={2}
-      rounded="md"
+      rounded="full"
       color={color}
-      fontSize={{ base: 'sm', md: 'md', lg: 'lg' }} // Tamaño responsive
-      _hover={{ textDecoration: 'none', bg: hoverBg, color: 'white' }}
+      fontWeight="medium"
+      fontSize={{ base: 'sm', md: 'md' }}
+      _hover={{ textDecoration: 'none', bg: hoverBg }}
     >
       {children}
     </Link>
@@ -45,94 +46,79 @@ const NavLink = ({ to, children }) => {
 
 export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { colorMode } = useColorMode()
-  const isLight = colorMode === 'light'
-
-  const fogStyle = {
-    position: 'absolute',
-    inset: 0,
-    zIndex: 0,
-    pointerEvents: 'none',
-    background: isLight
-      ? `radial-gradient(circle at 20% 30%, rgba(210,150,255,0.95) 0%, transparent 70%),
-         radial-gradient(circle at 80% 75%, rgba(240,200,255,0.9) 0%, transparent 70%)`
-      : `radial-gradient(circle at 20% 30%, rgba(255,165,0,0.25) 0%, transparent 70%),
-         radial-gradient(circle at 80% 75%, rgba(255,165,0,0.2) 0%, transparent 70%)`,
-    filter: 'blur(40px)',
-    opacity: isLight ? 0.95 : 0.85,
-    transformOrigin: 'center',
-    animation: 'navFogMove 18s ease-in-out infinite alternate',
-  }
-
-  const menuBg = useColorModeValue('rgba(255,255,255,0.5)', 'rgba(20,20,20,0.5)')
+  const navBg = useColorModeValue('rgba(255, 255, 255, 0.8)', 'rgba(26, 32, 44, 0.8)')
+  const borderColor = useColorModeValue('purple.100', 'whiteAlpha.300')
 
   return (
-    <Box position="fixed" top={0} left={0} width="100%" zIndex={30} bg="transparent" color={useColorModeValue('#3a2f44','orange.400')}>
-      {/* NIEBLA */}
-      <Box className="nav-fog" sx={fogStyle} aria-hidden />
-
-      <Flex
-        h={16}
-        alignItems="center"
-        justifyContent="space-between"
-        px={6}
-        maxW="1290px"
+    <Box 
+      position="fixed" 
+      top={5} // Bajé un poquito más la barra (de 4 a 5)
+      left={0} 
+      right={0} 
+      width="100%" 
+      zIndex={30} 
+      px={6} // Más margen a los costados de la pantalla
+    >
+      <Box
+        maxW="1200px" // Aumenté un poco el ancho total
         mx="auto"
-        position="relative"
-        zIndex={1}
+        bg={navBg}
+        backdropFilter="blur(12px)"
+        boxShadow="0 4px 30px rgba(0, 0, 0, 0.1)"
+        borderRadius="full"
+        border="1px solid"
+        borderColor={borderColor}
       >
-        <IconButton
-          size="md"
-          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-          aria-label="Toggle Menu"
-          display={{ md: 'none' }}
-          onClick={isOpen ? onClose : onOpen}
-          bg="transparent"
-          zIndex={2}
-        />
+        <Flex
+          h={16} // Volví a los 16 de altura para que el botón no toque los bordes arriba/abajo
+          alignItems="center"
+          justifyContent="space-between"
+          px={{ base: 6, md: 10 }} // ¡Aquí está el truco! Más espacio a los costados internos
+        >
+          <IconButton
+            size="md"
+            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+            aria-label="Toggle Menu"
+            display={{ md: 'none' }}
+            onClick={isOpen ? onClose : onOpen}
+            variant="ghost"
+          />
 
-        <HStack spacing={8} alignItems="center">
-          <Box
-            fontWeight="bold"
-            fontSize={{ base: 'xl', md: '2xl', lg: '3xl' }} // Tamaño responsive
-            color={useColorModeValue('purple.700','purple.300')}
-          >
-            Mi Portafolio
-          </Box>
-          <HStack as="nav" spacing={4} display={{ base: 'none', md: 'flex' }}>
-            {Links.map(({ label, to }) => (
-              <NavLink key={label} to={to}>
-                {label}
-              </NavLink>
-            ))}
+          <HStack spacing={8} alignItems="center">
+            <Box
+              fontWeight="bold"
+              fontSize={{ base: 'md', md: 'xl' }}
+              color={useColorModeValue('purple.700', 'purple.300')}
+              letterSpacing="wide"
+            >
+            </Box>
+            <HStack as="nav" spacing={2} display={{ base: 'none', md: 'flex' }}>
+              {Links.map(({ label, to }) => (
+                <NavLink key={label} to={to}>
+                  {label}
+                </NavLink>
+              ))}
+            </HStack>
           </HStack>
-        </HStack>
 
-        <HStack spacing={4}>
-          <ColorModeSwitcher />
-        </HStack>
-      </Flex>
+          {/* El botón de Dark Mode ahora tiene su propio espacio */}
+          <HStack spacing={4} pr={2}> 
+            <ColorModeSwitcher />
+          </HStack>
+        </Flex>
 
-      {/* Menú móvil */}
-      {isOpen && (
-        <Box pb={4} display={{ md: 'none' }} position="relative" zIndex={1} bg={menuBg} backdropFilter="blur(12px)">
-          <Stack as="nav" spacing={4} px={6}>
-            {Links.map(({ label, to }) => (
-              <NavLink key={label} to={to}>
-                {label}
-              </NavLink>
-            ))}
-          </Stack>
-        </Box>
-      )}
-
-      {/* Animación de niebla */}
-      <style>{`
-        @keyframes navFogMove {
-          0% { transform: translate(0%, 0%) scale(1); }
-          100% { transform: translate(18%, -12%) scale(1.06); }
-        }
-      `}</style>
+        {isOpen && (
+          <Box pb={4} display={{ md: 'none' }} px={10}>
+            <Stack as="nav" spacing={2}>
+              {Links.map(({ label, to }) => (
+                <NavLink key={label} to={to}>
+                  {label}
+                </NavLink>
+              ))}
+            </Stack>
+          </Box>
+        )}
+      </Box>
     </Box>
   )
 }
