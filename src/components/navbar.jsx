@@ -1,4 +1,3 @@
-// src/components/Navbar.jsx
 import {
   Box,
   Flex,
@@ -8,7 +7,7 @@ import {
   useDisclosure,
   Stack,
   useColorModeValue,
-  useColorMode,
+  Collapse,
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import { Link as RouterLink } from 'react-router-dom'
@@ -23,7 +22,7 @@ const Links = [
   { label: 'Contacto', to: '/contacto' },
 ]
 
-const NavLink = ({ to, children }) => {
+const NavLink = ({ to, children, onClick }) => {
   const color = useColorModeValue('purple.800', 'purple.300')
   const hoverBg = useColorModeValue('rgba(190, 113, 248, 0.2)', 'rgba(250, 181, 52, 0.15)')
 
@@ -31,13 +30,15 @@ const NavLink = ({ to, children }) => {
     <Link
       as={RouterLink}
       to={to}
-      px={4}
+      px={{ base: 4, lg: 5 }}
       py={2}
       rounded="full"
       color={color}
       fontWeight="medium"
-      fontSize={{ base: 'sm', md: 'md' }}
+      fontSize={{ base: 'sm', lg: 'md' }}
+      whiteSpace="nowrap" // <--- Evita que el texto se rompa o amontone
       _hover={{ textDecoration: 'none', bg: hoverBg }}
+      onClick={onClick}
     >
       {children}
     </Link>
@@ -45,80 +46,62 @@ const NavLink = ({ to, children }) => {
 }
 
 export default function Navbar() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const navBg = useColorModeValue('rgba(255, 255, 255, 0.8)', 'rgba(26, 32, 44, 0.8)')
+  const { isOpen, onToggle, onClose } = useDisclosure()
+  const navBg = useColorModeValue('rgba(255, 255, 255, 0.95)', 'rgba(26, 32, 44, 0.95)')
   const borderColor = useColorModeValue('purple.100', 'whiteAlpha.300')
 
   return (
-    <Box 
-      position="fixed" 
-      top={5} // Bajé un poquito más la barra (de 4 a 5)
-      left={0} 
-      right={0} 
-      width="100%" 
-      zIndex={30} 
-      px={6} // Más margen a los costados de la pantalla
-    >
-      <Box
-        maxW="1200px" // Aumenté un poco el ancho total
-        mx="auto"
-        bg={navBg}
-        backdropFilter="blur(12px)"
-        boxShadow="0 4px 30px rgba(0, 0, 0, 0.1)"
-        borderRadius="full"
-        border="1px solid"
-        borderColor={borderColor}
-      >
+    <Box position="fixed" top={5} left={0} right={0} width="100%" zIndex={30} px={4}>
+      <Box maxW="1200px" mx="auto">
         <Flex
-          h={16} // Volví a los 16 de altura para que el botón no toque los bordes arriba/abajo
+          h={16}
           alignItems="center"
           justifyContent="space-between"
-          px={{ base: 6, md: 10 }} // ¡Aquí está el truco! Más espacio a los costados internos
+          px={{ base: 4, md: 8 }}
+          bg={navBg}
+          backdropFilter="blur(10px)"
+          boxShadow="lg"
+          borderRadius="full"
+          border="1px solid"
+          borderColor={borderColor}
         >
           <IconButton
             size="md"
             icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
             aria-label="Toggle Menu"
-            display={{ md: 'none' }}
-            onClick={isOpen ? onClose : onOpen}
+            display={{ base: 'flex', md: 'none' }}
+            onClick={onToggle}
             variant="ghost"
+            borderRadius="12px"
           />
 
-          <HStack spacing={8} alignItems="center">
-            <Box
-              fontWeight="bold"
-              fontSize={{ base: 'md', md: 'xl' }}
-              color={useColorModeValue('purple.700', 'purple.300')}
-              letterSpacing="wide"
-            >
-            </Box>
-            <HStack as="nav" spacing={2} display={{ base: 'none', md: 'flex' }}>
-              {Links.map(({ label, to }) => (
-                <NavLink key={label} to={to}>
-                  {label}
-                </NavLink>
-              ))}
-            </HStack>
+          <HStack 
+            as="nav" 
+            spacing={{ md: 0, lg: 2 }} 
+            display={{ base: 'none', md: 'flex' }}
+            flex="1"
+            justifyContent="center"
+          >
+            {Links.map(({ label, to }) => (
+              <NavLink key={label} to={to}>{label}</NavLink>
+            ))}
           </HStack>
 
-          {/* El botón de Dark Mode ahora tiene su propio espacio */}
-          <HStack spacing={4} pr={2}> 
+          <Box ml={{ base: 0, md: 4 }}>
             <ColorModeSwitcher />
-          </HStack>
+          </Box>
         </Flex>
 
-        {isOpen && (
-          <Box pb={4} display={{ md: 'none' }} px={10}>
-            <Stack as="nav" spacing={2}>
+        <Collapse in={isOpen} animateOpacity>
+          <Box mt={2} p={6} bg={navBg} borderRadius="2xl" boxShadow="2xl" border="1px solid" borderColor={borderColor} display={{ md: 'none' }}>
+            <Stack as="nav" spacing={3} align="center">
               {Links.map(({ label, to }) => (
-                <NavLink key={label} to={to}>
-                  {label}
-                </NavLink>
+                <NavLink key={label} to={to} onClick={onClose}>{label}</NavLink>
               ))}
             </Stack>
           </Box>
-        )}
+        </Collapse>
       </Box>
     </Box>
-  )
+  ) 
 }

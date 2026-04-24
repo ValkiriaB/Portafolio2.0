@@ -5,11 +5,13 @@ import {
   VStack,
   Stack,
   Icon,
-  useColorModeValue
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { FaLaptopCode, FaCode, FaBug } from 'react-icons/fa'
 import { motion } from 'framer-motion'
 import { MdDesignServices } from 'react-icons/md'
+
+const MotionBox = motion(Box)
 
 const estudios = [
   {
@@ -42,52 +44,67 @@ const estudios = [
   },
 ]
 
-const MotionBox = motion(Box)
-
-export default function Estudios() {
-  const bg = useColorModeValue('purple.50', 'purple.900')
+export default function About() {
+  const bgCard = useColorModeValue('purple.50', 'purple.900')
   const headingColor = useColorModeValue('purple.700', 'purple.200')
-  const tituloColor = useColorModeValue('purple.700', 'purple.200')
-  const descripcionColor = useColorModeValue('gray.600', 'gray.300')
-  const fechaColor = useColorModeValue('gray.500', 'gray.400')
+  const textColor = useColorModeValue('gray.600', 'gray.300')
 
   return (
-    <Box px={{ base: 4, md: 6 }} py={{ base: 8, md: 14 }}>
-      <Heading
-        mb={8}
-        textAlign="center"
-        color={headingColor}
-        fontSize={{ base: '2xl', md: '3xl' }}
+    <Box maxW="1200px" mx="auto">
+      
+      {/* SECCIÓN ESTUDIOS */}
+      <Box 
+        id="estudios" 
+        scrollMarginTop="100px" 
+        px={{ base: 4, md: 6 }} 
+        py={{ base: 10, md: 20 }}
       >
-        Mis Estudios 🎓
-      </Heading>
+        <Heading
+          mb={12}
+          textAlign="center"
+          color={headingColor}
+          fontSize={{ base: '2xl', md: '4xl' }}
+        >
+          Mis Estudios 🎓
+        </Heading>
 
-      <VStack spacing={6} align="center"> {/* centrado horizontal */}
-        {estudios.map((item, index) => (
-          <MotionBox
-            key={index}
-            whileHover={{ scale: 1.03 }}
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.4, delay: index * 0.1 }}
-            bg={bg}
-            p={{ base: 4, md: 6 }}
-            rounded="xl"
-            shadow="md"
-            w={{ base: '90%', md: '1200px' }}  
-          >
-            <Stack direction={{ base: 'column', md: 'row' }} spacing={4} align="flex-start">
-              <Icon as={item.icon} boxSize={{ base: 6, md: 8 }} color="purple.400" />
-              <Box>
-                <Heading size="md" color={tituloColor}>{item.titulo}</Heading>
-                <Text fontWeight="bold" fontSize={{ base: 'sm', md: 'md' }}>{item.institucion}</Text>
-                <Text fontSize={{ base: 'sm', md: 'md' }} color={descripcionColor}>{item.descripcion}</Text>
-                <Text fontSize="xs" color={fechaColor}>{item.fecha}</Text>
-              </Box>
-            </Stack>
-          </MotionBox>
-        ))}
-      </VStack>
+        <VStack spacing={6} align="center" w="100%">
+          {estudios.map((item, index) => (
+            <MotionBox
+              key={index}
+              whileHover={{ scale: 1.02 }}
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+              bg={bgCard}
+              p={{ base: 5, md: 8 }}
+              rounded="2xl"
+              shadow="lg"
+              w="100%"
+              border="1px solid"
+              borderColor={useColorModeValue('purple.100', 'whiteAlpha.100')}
+            >
+              <Stack 
+                direction={{ base: 'column', md: 'row' }} 
+                spacing={6} 
+                align={{ base: 'center', md: 'flex-start' }}
+                textAlign={{ base: 'center', md: 'left' }}
+              >
+                <Box p={3} bg={useColorModeValue('white', 'purple.800')} rounded="lg" shadow="sm">
+                  <Icon as={item.icon} boxSize={8} color="purple.400" />
+                </Box>
+                <Box>
+                  <Heading size="md" mb={1} color={headingColor}>{item.titulo}</Heading>
+                  <Text fontWeight="bold" color="purple.500" mb={1}>{item.institucion}</Text>
+                  <Text fontSize="sm" color={textColor} mb={2}>{item.descripcion}</Text>
+                  <Text fontSize="xs" fontWeight="bold" color="gray.500">{item.fecha.toUpperCase()}</Text>
+                </Box>
+              </Stack>
+            </MotionBox>
+          ))}
+        </VStack>
+      </Box>
     </Box>
   )
 }

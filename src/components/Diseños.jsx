@@ -20,6 +20,21 @@ import { FaFilePdf, FaVideo, FaImage, FaPalette, FaBezierCurve } from 'react-ico
 
 const MotionBox = motion(Box)
 
+// Configuración de la animación de entrada para toda la sección
+const containerVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { 
+      duration: 0.8, 
+      ease: "easeOut",
+      when: "beforeChildren", // Espera a que el contenedor termine para animar los hijos
+      staggerChildren: 0.2    // Hace que las tarjetas aparezcan una tras otra
+    }
+  }
+}
+
 const designs = {
   canva: [
     {
@@ -148,10 +163,9 @@ export default function Diseño() {
   const ProjectGrid = ({ items }) => (
     <SimpleGrid 
       columns={{ base: 1, md: 2, lg: 3 }} 
-      spacing={10} 
+      spacing={{ base: 6, md: 8, lg: 10 }} 
       mt={8}
       justifyItems="center"
-      alignItems="stretch"
     >
       {items.map((item) => {
         const btn = getButtonProps(item.type);
@@ -164,18 +178,32 @@ export default function Diseño() {
             overflow="hidden"
             whileHover={{ scale: 1.03 }}
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             display="flex"
             flexDirection="column"
-            h="100%" // Obliga a todas a medir lo mismo que la más alta
-            maxW="350px"
+            h="100%" 
+            maxW={{ base: "100%", sm: "350px" }}
             w="100%"
           >
-            <Image src={item.image} alt={item.title} h="200px" w="100%" objectFit="cover" />
+            <Image 
+              src={item.image} 
+              alt={item.title} 
+              h={{ base: "180px", md: "200px" }} 
+              w="100%" 
+              objectFit="cover" 
+            />
             
-            <Box p={6} display="flex" flexDirection="column" flex="1" textAlign="center">
+            <Box p={{ base: 4, md: 6 }} display="flex" flexDirection="column" flex="1" textAlign="center">
               <Stack spacing={3} mb={6} flex="1">
-                <Heading size="md" color={textColor} minH="50px" display="flex" alignItems="center" justifyContent="center">
+                <Heading 
+                  size="md" 
+                  color={textColor} 
+                  minH={{ base: "auto", md: "50px" }} 
+                  display="flex" 
+                  alignItems="center" 
+                  justifyContent="center"
+                >
                   {item.title}
                 </Heading>
                 <Text fontSize="sm" color={descColor} noOfLines={3}>
@@ -193,7 +221,8 @@ export default function Diseño() {
                 rounded="full"
                 size="md"
                 width="full"
-                mt="auto" // Empuja el botón siempre al fondo
+                mt="auto"
+                _hover={{ bg: `${btn.color}.500`, color: 'white' }}
               >
                 {btn.label}
               </Button>
@@ -205,30 +234,64 @@ export default function Diseño() {
   );
 
   return (
-    <Box id="diseño" maxW="7xl" mx="auto" py={20} px={6}>
-      <Heading mb={10} textAlign="center" color={titleColor}>
-        Galería Creativa
+    <MotionBox 
+      id="diseño" 
+      maxW="7xl" 
+      mx="auto" 
+      py={{ base: 12, md: 20 }} 
+      px={{ base: 4, md: 6 }}
+      scrollMarginTop="100px"
+      // Aplicamos la animación de entrada suave aquí
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
+      variants={containerVariants}
+    >
+      <Heading 
+        mb={10} 
+        textAlign="center" 
+        color={titleColor}
+        fontSize={{ base: "2xl", md: "4xl" }}
+      >
+        Galería Creativa ✨
       </Heading>
 
       <Tabs variant="soft-rounded" colorScheme="purple" align="center">
-        <TabList bg={useColorModeValue('gray.100', 'gray.800')} p={1} rounded="full" maxW="fit-content">
-          <Tab rounded="full" fontWeight="bold" _selected={{ bg: 'purple.500', color: 'white' }}>
-            <Icon as={FaPalette} mr={2} /> Diseño en Canva
+        <TabList 
+          bg={useColorModeValue('gray.100', 'gray.800')} 
+          p={1} 
+          rounded="full" 
+          maxW="fit-content"
+          display="flex"
+          flexWrap={{ base: "wrap", md: "nowrap" }}
+        >
+          <Tab 
+            rounded="full" 
+            fontWeight="bold" 
+            fontSize={{ base: "xs", sm: "sm", md: "md" }}
+            _selected={{ bg: 'purple.500', color: 'white' }}
+          >
+            <Icon as={FaPalette} mr={{ base: 1, md: 2 }} /> Canva
           </Tab>
-          <Tab rounded="full" fontWeight="bold" _selected={{ bg: 'purple.500', color: 'white' }}>
-            <Icon as={FaBezierCurve} mr={2} /> Ilustraciones
+          <Tab 
+            rounded="full" 
+            fontWeight="bold" 
+            fontSize={{ base: "xs", sm: "sm", md: "md" }}
+            _selected={{ bg: 'purple.500', color: 'white' }}
+          >
+            <Icon as={FaBezierCurve} mr={{ base: 1, md: 2 }} /> Ilustraciones
           </Tab>
         </TabList>
 
-        <TabPanels px={0}>
-          <TabPanel>
+        <TabPanels>
+          <TabPanel px={0}>
             <ProjectGrid items={designs.canva} />
           </TabPanel>
-          <TabPanel>
+          <TabPanel px={0}>
             <ProjectGrid items={designs.ilustraciones} />
           </TabPanel>
         </TabPanels>
       </Tabs>
-    </Box>
+    </MotionBox>
   )
 }
