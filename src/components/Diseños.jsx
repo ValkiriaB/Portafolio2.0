@@ -109,6 +109,22 @@ const designs = {
       url: '/docs/Adi.png',
       type: 'imagen',
     },
+      {
+      id: 10,
+      title: 'Publicación para Instagram',
+      description: 'Publicidad de limpieza de cutis que hice para una cuenta de Instagram. La publicidad fue hecha en Capcut y Canva',
+      image: '/docs/limpieza.mp4',
+      url: '/docs/limpieza.mp4',
+      type: 'video',
+    },
+     {
+      id: 11,
+      title: 'Promoción día de la madre',
+      description: 'La publicidad fue hecha en Capcut y Canva',
+      image: '/docs/publicidadmadre.mp4',
+      url: '/docs/publicidadmadre.mp4',
+      type: 'video',
+    },
   ],
   ilustraciones: [
     {
@@ -143,6 +159,23 @@ const designs = {
       url: '/docs/dibujo.png',
       type: 'imagen',
     },
+     {
+      id: 14,
+      title: 'Ilustración para mi Instagram',
+      description: 'Apenas me decidi a abrir mi Instagram de arte , quise hacer una ilustración insipirada un poco en los comics, la cual hice en Krita.',
+      image: '/docs/foto_de_perfil.jpg',
+      url: '/docs/foto_de_perfil.jpg',
+      type: 'imagen',
+    },
+     {
+      id: 15,
+      title: 'Dibujo de Personaje',
+      description: 'Esta vez tome la inspiración de hacer una ilustración de dos personajes de comics, Jason Todd y Cassandra Cain, la cual hice en Krita.',
+      image: '/docs/jason_cassandra.jpg',
+      url: '/docs/jason_cassandra.jpg',
+      type: 'imagen',
+    },
+   
   ]
 }
 
